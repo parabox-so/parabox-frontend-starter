@@ -1,0 +1,29 @@
+# Parabox Cursor Rules
+
+You are working in the Parabox Frontend Monorepo. Always adhere strictly to these rules:
+
+1. WORKSPACE PREREQUISITES:
+   - This monorepo uses `pnpm` and `turborepo`.
+   - Core packages:
+     * `@parabox/ui`: Layouts, AppShell, ModalBus, PageModal, Buttons, Tabs, Feedback states.
+     * `@parabox/canvas`: CanvasContext, CanvasRenderer, SlashMenu, and all canvas block components.
+     * `@parabox/realtime`: SSEClient, WebSocketManager, VirtualLogStream, useRealtimeInvalidate, StaleDataDetector.
+     * `@parabox/auth`: Clerk/Mock auth, WorkspaceSwitcher, RequireEntitlement, RequireRole.
+     * `@parabox/api-client`: ParaboxApiClient with automatic workspace ID & auth header injection and 402 upgrade traps.
+
+2. COMPONENT DESIGN:
+   - Always import primitives from `@parabox/*` rather than creating duplicate UI components.
+   - Use Tailwind CSS with clean utility composition via `cn(...)` from `@parabox/ui`.
+   - Prefer dark-mode ready themes with zinc neutrals and indigo/violet brand highlights.
+
+3. CANVAS BLOCKS:
+   - Follow the `CanvasBlockProps<T>` pattern.
+   - When building a new block, register it in `packages/canvas/src/SlashMenu.tsx` and `CanvasRenderer.tsx`.
+
+4. REALTIME DATA:
+   - Handle connection status explicitly using `<ConnectionStatus state={...} />`.
+   - Use `<VirtualLogStream />` for log streams, LLM token streams, and console output.
+
+5. AUTH & MULTITENANCY:
+   - Wrap feature gates in `<RequireEntitlement feature="...">`.
+   - Use `useParaboxAuth()` or `useCurrentTenant()` for tenant contextual info.

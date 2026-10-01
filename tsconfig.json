@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "preserve",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@parabox/ui": ["packages/ui/src"],
+      "@parabox/ui/*": ["packages/ui/src/*"],
+      "@parabox/canvas": ["packages/canvas/src"],
+      "@parabox/canvas/*": ["packages/canvas/src/*"],
+      "@parabox/realtime": ["packages/realtime/src"],
+      "@parabox/realtime/*": ["packages/realtime/src/*"],
+      "@parabox/auth": ["packages/auth/src"],
+      "@parabox/auth/*": ["packages/auth/src/*"],
+      "@parabox/api-client": ["packages/api-client/src"],
+      "@parabox/api-client/*": ["packages/api-client/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next"]
+}
