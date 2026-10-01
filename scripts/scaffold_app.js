@@ -87,7 +87,7 @@ const tsconfig = {
     incremental: true,
     plugins: [{ name: 'next' }],
     paths: {
-      '@/*': ['./app/*']
+      '@/*': ['./*']
     }
   },
   include: ['next-env.d.ts', '**/*.ts', '**/*.tsx', '.next/types/**/*.ts'],
@@ -95,7 +95,30 @@ const tsconfig = {
 };
 fs.writeFileSync(path.join(targetDir, 'tsconfig.json'), JSON.stringify(tsconfig, null, 2));
 
-// 3. next.config.ts
+// 3. components.json (Standard shadcn configuration)
+const componentsJson = {
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+};
+fs.writeFileSync(path.join(targetDir, 'components.json'), JSON.stringify(componentsJson, null, 2));
+
+// 4. next.config.ts
 const nextConfig = `import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -112,11 +135,11 @@ export default nextConfig;
 `;
 fs.writeFileSync(path.join(targetDir, 'next.config.ts'), nextConfig);
 
-// 4. tailwind.config.ts
+// 5. tailwind.config.ts (Standard shadcn tailwind mapping)
 const tailwindConfig = `import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: 'class',
+  darkMode: ['class'],
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
@@ -127,8 +150,44 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
@@ -139,7 +198,7 @@ export default config;
 `;
 fs.writeFileSync(path.join(targetDir, 'tailwind.config.ts'), tailwindConfig);
 
-// 5. postcss.config.mjs
+// 6. postcss.config.mjs
 const postcssConfig = `export default {
   plugins: {
     tailwindcss: {},
@@ -149,25 +208,70 @@ const postcssConfig = `export default {
 `;
 fs.writeFileSync(path.join(targetDir, 'postcss.config.mjs'), postcssConfig);
 
-// 6. app/globals.css
+// 7. app/globals.css (Standard shadcn CSS variables)
 const globalsCss = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 `;
 fs.writeFileSync(path.join(targetDir, 'app', 'globals.css'), globalsCss);
 
-// 7. app/layout.tsx
+// 8. app/layout.tsx
 const layoutTsx = `import type { Metadata } from 'next';
 import './globals.css';
 import { ParaboxAuthProvider } from '@parabox/auth';
@@ -186,7 +290,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-zinc-950 text-zinc-100 min-h-screen">
+      <body className="min-h-screen">
         <ParaboxAuthProvider>
           <AppShell
             appName="${normalizedName.toUpperCase()}"
@@ -206,20 +310,19 @@ export default function RootLayout({
 `;
 fs.writeFileSync(path.join(targetDir, 'app', 'layout.tsx'), layoutTsx);
 
-// 8. app/page.tsx
+// 9. app/page.tsx
 const pageTsx = `'use client';
 
 import React from 'react';
 import { Card, Button, Badge } from '@parabox/ui';
-import { RequireEntitlement } from '@parabox/auth';
 
 export default function AppHomePage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">${normalizedName}</h1>
-          <p className="text-sm text-zinc-400">Freshly scaffolded Parabox micro-frontend.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">${normalizedName}</h1>
+          <p className="text-sm text-muted-foreground">Freshly scaffolded Parabox micro-frontend.</p>
         </div>
         <Button variant="primary">Launch Action</Button>
       </div>
@@ -227,11 +330,11 @@ export default function AppHomePage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="p-4 space-y-2">
           <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold text-zinc-400">STATUS</span>
+            <span className="text-xs font-semibold text-muted-foreground">STATUS</span>
             <Badge variant="success">Active</Badge>
           </div>
           <div className="text-2xl font-bold">Online</div>
-          <p className="text-xs text-zinc-500">Connected to monorepo primitives</p>
+          <p className="text-xs text-muted-foreground">Connected to monorepo primitives & standard shadcn theme</p>
         </Card>
       </div>
     </div>

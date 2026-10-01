@@ -2,16 +2,15 @@
 
 import React, { useEffect } from 'react';
 import { cn } from '../../lib/utils';
-import { Button } from './Button';
+import { X } from 'lucide-react';
 
 export interface DialogProps {
   isOpen: boolean;
   onClose: () => void;
   title?: React.ReactNode;
   description?: React.ReactNode;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   footer?: React.ReactNode;
-  className?: string;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 }
 
@@ -22,7 +21,6 @@ export const Dialog: React.FC<DialogProps> = ({
   description,
   children,
   footer,
-  className,
   maxWidth = 'md',
 }) => {
   useEffect(() => {
@@ -31,16 +29,8 @@ export const Dialog: React.FC<DialogProps> = ({
         onClose();
       }
     };
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -57,38 +47,41 @@ export const Dialog: React.FC<DialogProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity animate-in fade-in"
+        className="fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
-      {/* Dialog Panel */}
+      {/* Content */}
       <div
         className={cn(
-          'relative w-full rounded-2xl bg-zinc-900 border border-zinc-800 p-6 text-left shadow-2xl transition-all z-10 animate-in zoom-in-95 duration-150',
-          maxWidths[maxWidth],
-          className
+          'relative w-full rounded-lg border border-border bg-card p-6 shadow-lg duration-200 text-card-foreground',
+          maxWidths[maxWidth]
         )}
       >
-        <div className="flex items-start justify-between pb-3">
-          <div>
-            {title && <h3 className="text-lg font-semibold text-zinc-100">{title}</h3>}
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-muted-foreground hover:text-foreground"
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </button>
+
+        {(title || description) && (
+          <div className="flex flex-col space-y-1.5 text-center sm:text-left mb-4">
+            {title && <h2 className="text-lg font-semibold leading-none tracking-tight">{title}</h2>}
             {description && (
-              <p className="mt-1 text-sm text-zinc-400">{description}</p>
+              <p className="text-sm text-muted-foreground">{description}</p>
             )}
           </div>
-          <button
-            onClick={onClose}
-            className="rounded-lg p-1 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
+        )}
 
         <div className="py-2">{children}</div>
 
-        {footer && <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-zinc-800/80">{footer}</div>}
+        {footer && (
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4 pt-3 border-t border-border">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );
