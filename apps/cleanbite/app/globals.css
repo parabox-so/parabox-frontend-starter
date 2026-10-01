@@ -2,56 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hallmark · macrostructure: split-studio · theme: hum · pre-emit critique: P5 H5 E5 S5 R5 V5 */
+
 @layer base {
   :root {
-    --background: 48 33% 98%; /* Warm modern sourdough cream #faf8f5 */
-    --foreground: 160 30% 12%; /* Deep forest charcoal #13241b */
-    --card: 0 0% 100%;
-    --card-foreground: 160 30% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 160 30% 12%;
-    --primary: 154 65% 38%; /* Fresh vibrant matcha green #22c55e / #15803d */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 45 40% 93%; /* Light oat cream */
-    --secondary-foreground: 160 30% 12%;
-    --muted: 45 20% 92%;
-    --muted-foreground: 160 10% 45%;
-    --accent: 38 92% 50%; /* Playful warm amber #f59e0b */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 45 20% 88%;
-    --input: 45 20% 88%;
-    --ring: 154 65% 38%;
-    --radius: 1rem;
+    --bg-paper: #F6F3EB;
+    --bg-card: #FFFFFF;
+    --bg-card-tint: #F0ECE1;
+    --ink-primary: #18221B;
+    --ink-secondary: #4A574E;
+    --ink-muted: #7A8A7F;
+    --accent-matcha: #1E6B47;
+    --accent-matcha-light: #E7F3EC;
+    --accent-apricot: #D96B43;
+    --accent-apricot-light: #FCEEE8;
+    --accent-sun: #E5A93C;
+    --border-hairline: rgba(24, 34, 27, 0.12);
+    --border-strong: rgba(24, 34, 27, 0.24);
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground antialiased selection:bg-emerald-200 selection:text-emerald-950;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  }
+body {
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  overflow-x: clip;
+  letter-spacing: -0.011em;
 }
 
-@keyframes scan-laser {
-  0% { transform: translateY(0%); opacity: 0.8; }
-  50% { transform: translateY(100%); opacity: 1; }
-  100% { transform: translateY(0%); opacity: 0.8; }
+/* Tactile physical receipt paper border */
+.receipt-serrated {
+  background: var(--bg-card);
+  position: relative;
+  box-shadow: 0 4px 20px -2px rgba(24, 34, 27, 0.08), 0 0 0 1px var(--border-hairline);
 }
 
-.animate-scan-laser {
-  animation: scan-laser 2.5s ease-in-out infinite;
+.receipt-serrated::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-size: 12px 6px;
+  background-repeat: repeat-x;
+  background-image: radial-gradient(circle at 6px 0px, transparent 4px, var(--bg-card) 4px);
 }
 
-@keyframes float-soft {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(1deg); }
+/* Subtle physical ink stamp badge */
+.ink-stamp {
+  border: 1.5px dashed var(--accent-matcha);
+  color: var(--accent-matcha);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform: rotate(-1.5deg);
 }
 
-.animate-float-soft {
-  animation: float-soft 4s ease-in-out infinite;
+@keyframes beam-sweep {
+  0% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(180px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.6; }
+}
+
+.animate-beam-sweep {
+  animation: beam-sweep 2.2s ease-in-out infinite;
 }
