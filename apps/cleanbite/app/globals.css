@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 48 33% 98%; /* Warm modern sourdough cream #faf8f5 */
+    --foreground: 160 30% 12%; /* Deep forest charcoal #13241b */
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 30% 12%;
+    --primary: 154 65% 38%; /* Fresh vibrant matcha green #22c55e / #15803d */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 40% 93%; /* Light oat cream */
+    --secondary-foreground: 160 30% 12%;
+    --muted: 45 20% 92%;
+    --muted-foreground: 160 10% 45%;
+    --accent: 38 92% 50%; /* Playful warm amber #f59e0b */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 20% 88%;
+    --input: 45 20% 88%;
+    --ring: 154 65% 38%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-emerald-200 selection:text-emerald-950;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@keyframes scan-laser {
+  0% { transform: translateY(0%); opacity: 0.8; }
+  50% { transform: translateY(100%); opacity: 1; }
+  100% { transform: translateY(0%); opacity: 0.8; }
+}
+
+.animate-scan-laser {
+  animation: scan-laser 2.5s ease-in-out infinite;
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+.animate-float-soft {
+  animation: float-soft 4s ease-in-out infinite;
+}
