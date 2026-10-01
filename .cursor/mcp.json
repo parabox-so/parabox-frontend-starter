@@ -13,10 +13,7 @@
       "args": ["-y", "@modelcontextprotocol/server-github"]
     },
     "21st": {
-      "url": "https://21st.dev/api/mcp",
-      "headers": {
-        "x-api-key": "${API_KEY_21ST}"
-      }
+      "url": "https://21st.dev/api/mcp"
     }
   }
 }
