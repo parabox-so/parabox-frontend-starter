@@ -22,3 +22,7 @@ If your environment supports subagent tools (e.g., `invoke_subagent`):
 2. **Standard shadcn UI:** Use standard shadcn primitives (`packages/ui`) with CSS variables in `globals.css`.
 3. **Canvas & Realtime:** Build interactive Canvas blocks and realtime SSE streaming terminals using `@parabox/canvas` and `@parabox/realtime`.
 4. **Zero Manual Terminal Commands:** Scaffolding, builds, and browser testing run autonomously.
+5. **21st.dev Component Catalog & API Key Enforcement:**
+   * 21st.dev requires an API key (`API_KEY_21ST` or `TWENTYFIRST_TOKEN`, format `21st_sk_...` from https://21st.dev/mcp).
+   * Agents MUST verify that `API_KEY_21ST` is set in `.env` or `~/.config/21st/auth.json`. If missing, prompt the user for their free key.
+   * Always search and retrieve verified community components (`npx @21st-dev/cli search <query>`) to use as structural inspiration or install with `npx shadcn@latest add "https://21st.dev/r/<author>/<slug>?api_key=$API_KEY_21ST"`.
