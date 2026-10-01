@@ -7,7 +7,18 @@ If your environment supports subagent tools (e.g., `invoke_subagent`):
 - Spawn specialized subagents (`frontend-builder`, `landing-page-generator`, `synthetic-user-tester`) to execute frontend builds and QA testing concurrently.
 
 ## ⚡ Core Engineering Standards:
-1. **Hallmark Design Craft:** Strictly apply Hallmark rules (21 themes, roman headings, honest copy, zero fake AI metrics, tactile microinteractions).
+1. **MANDATORY Hallmark Anti-Slop Protocol (Hard Gate Before Writing ANY UI Code):**
+   * **Step 1:** Call `view_file` on `.agents/skills/hallmark/SKILL.md`.
+   * **Step 2:** Call `view_file` on the chosen macrostructure (e.g. `references/macrostructures/05-workbench.md` or `15-split-studio.md`).
+   * **Step 3:** Call `view_file` on the chosen theme (e.g. `references/themes/cobalt.md` or `references/themes/hum.md`).
+   * **Step 4:** Stamp Line 1 of the page with the signature critique comment:
+     `/* Hallmark · macrostructure: <name> · theme: <theme> · pre-emit critique: P5 H5 E5 S5 R5 V5 */`
+   * **Zero AI-Slop Checklist:**
+     - ❌ NO text gradient fills (`bg-gradient-to-r`). Use solid ink typography.
+     - ❌ NO fake macOS window dots (`🔴 🟡 🟢`) or fake browser address bars.
+     - ❌ NO decorative blueprint grid wallpapers (`.bg-grid` / `.bg-studio-grid`) or ambient blur blobs.
+     - ❌ NO fabricated metrics (*"98.4% Accuracy"*, *"10x faster"*, *"10 Viral Shorts in 18 Seconds"*). Use real domain specs (`48kHz PCM`, `LUFS`, timecodes).
+     - ❌ NO italic headings. Headings are always roman (`font-style: normal`).
 2. **Standard shadcn UI:** Use standard shadcn primitives (`packages/ui`) with CSS variables in `globals.css`.
 3. **Canvas & Realtime:** Build interactive Canvas blocks and realtime SSE streaming terminals using `@parabox/canvas` and `@parabox/realtime`.
 4. **Zero Manual Terminal Commands:** Scaffolding, builds, and browser testing run autonomously.

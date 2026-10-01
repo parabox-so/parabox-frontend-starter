@@ -11,7 +11,10 @@ You are working in the Parabox Frontend Monorepo. Always adhere strictly to thes
      * `@parabox/auth`: Clerk/Mock auth, WorkspaceSwitcher, RequireEntitlement, RequireRole.
      * `@parabox/api-client`: ParaboxApiClient with automatic workspace ID & auth header injection and 402 upgrade traps.
 
-2. COMPONENT DESIGN:
+2. COMPONENT DESIGN & HALLMARK PROTOCOL:
+   - **MANDATORY HALLMARK HARD GATE:** Before creating any frontend page or UI component, you MUST view `.agents/skills/hallmark/SKILL.md` and the selected macrostructure (`references/macrostructures/`) and theme (`references/themes/`).
+   - Line 1 must contain: `/* Hallmark · macrostructure: <name> · theme: <theme> · pre-emit critique: P5 H5 E5 S5 R5 V5 */`.
+   - Hard bans: NO text gradients, NO fake OS dots (`🔴 🟡 🟢`), NO blueprint grid wallpapers (`.bg-grid`), NO invented marketing numbers, roman headings only.
    - Always import primitives from `@parabox/*` rather than creating duplicate UI components.
    - Use Tailwind CSS with clean utility composition via `cn(...)` from `@parabox/ui`.
    - Prefer dark-mode ready themes with zinc neutrals and indigo/violet brand highlights.
